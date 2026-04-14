@@ -8,6 +8,7 @@ from pathlib import Path
 from commands.add import add_task
 from commands.list import list_tasks
 from commands.done import mark_done
+from commands.delete import delete_task
 
 
 def load_config():
@@ -33,6 +34,10 @@ def main():
     done_parser = subparsers.add_parser("done", help="Mark task as complete")
     done_parser.add_argument("task_id", type=int, help="Task ID to mark done")
 
+    # Delete command
+    delete_parser = subparsers.add_parser("delete", help="Delete a task")
+    delete_parser.add_argument("task_id", type=int, help="Task ID to delete")
+
     args = parser.parse_args()
 
     if args.command == "add":
@@ -41,6 +46,8 @@ def main():
         list_tasks()
     elif args.command == "done":
         mark_done(args.task_id)
+    elif args.command == "delete":
+        delete_task(args.task_id)
     else:
         parser.print_help()
 
